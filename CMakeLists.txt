@@ -12,4 +12,6 @@ add_executable(
     aerocore
     src/main.cpp
     src/sensors/SimulatedSensor.cpp
+    src/sensors/SimulatedImu.cpp
+    src/flight/FlightComputer.cpp
 )
