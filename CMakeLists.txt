@@ -14,4 +14,5 @@ add_executable(
     src/sensors/SimulatedSensor.cpp
     src/sensors/SimulatedImu.cpp
     src/flight/FlightComputer.cpp
+    src/sensors/SimulatedBarometer.cpp
 )
