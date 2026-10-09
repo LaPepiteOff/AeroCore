@@ -7,5 +7,4 @@ struct FlightData
     double pitch;
     double roll;
     double temperature;
-    
 };

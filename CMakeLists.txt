@@ -11,8 +11,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(
     aerocore
     src/main.cpp
-    src/sensors/SimulatedSensor.cpp
     src/sensors/SimulatedImu.cpp
     src/flight/FlightComputer.cpp
     src/sensors/SimulatedBarometer.cpp
+    src/sensors/SimulatedAirspeed.cpp
 )

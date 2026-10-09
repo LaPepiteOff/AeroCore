@@ -10,6 +10,10 @@ void FlightComputer::updateFromBarometer(const BarometerData& data) {
     flightData_.temperature = data.temperature;
 }
 
+void FlightComputer::updateFromAirspeed(const AirspeedData& data) {
+    flightData_.airspeed = data.airspeed;
+}
+
 const FlightData& FlightComputer::getFlightData() const {
     return flightData_;
 }
