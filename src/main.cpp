@@ -3,6 +3,7 @@
 #include "flight/FlightComputer.hpp"
 #include "sensors/SimulatedBarometer.hpp"
 #include "sensors/SimulatedAirspeed.hpp"
+#include <chrono>
 
 int main()
 {
@@ -14,12 +15,18 @@ int main()
     SimulatedBarometer barometer;
     SimulatedAirspeed airspeed;
 
+    auto previousBarometerTime = std::chrono::steady_clock::now();
+
     for (int i = 0; i < 10; ++i) {
         ImuData imuData = imu.read();
         flightComputer.updateFromImu(imuData);
 
+        auto currentBarometerTime = std::chrono::steady_clock::now();
+        std::chrono::duration<double> elapsed = currentBarometerTime - previousBarometerTime;
+        double deltaTime = elapsed.count();
         BarometerData barometerData = barometer.read();
-        flightComputer.updateFromBarometer(barometerData);
+        flightComputer.updateFromBarometer(barometerData, deltaTime);
+        previousBarometerTime = currentBarometerTime;
 
         AirspeedData airspeedData = airspeed.read();
         flightComputer.updateFromAirspeed(airspeedData);

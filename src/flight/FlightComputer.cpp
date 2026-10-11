@@ -17,8 +17,13 @@ bool FlightComputer::updateFromImu(const ImuData& data) {
     return true;
 }
 
-bool FlightComputer::updateFromBarometer(const BarometerData& data) {
-        if(
+bool FlightComputer::updateFromBarometer(const BarometerData& data, double deltaTime) {
+    if(!std::isfinite(deltaTime) ||
+        deltaTime <= 0
+    ){
+        return false;
+    }
+    if(
         data.altitude < -2000 || 
         data.altitude > 60000 || 
         !std::isfinite(data.altitude) || 

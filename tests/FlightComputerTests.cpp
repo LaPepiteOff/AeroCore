@@ -52,15 +52,38 @@ int main()
     
     //Echantillon valide
     BarometerData validBarometer{10000.0, 20.0};
-    bool valBarometerData = computer.updateFromBarometer(validBarometer);
+    bool valBarometerData = computer.updateFromBarometer(validBarometer, 1.0);
     assert(valBarometerData);
 
     assert(data.altitude == 10000.0);
     assert(data.temperature == 20.0);
 
     //Echantillon invalide
+    BarometerData validBarometerUpdated{10250.0, 20.0};
+    bool invalBarometerDataTime0 = computer.updateFromBarometer(validBarometerUpdated, 0.0);
+    assert(!invalBarometerDataTime0);
+    assert(data.altitude == 10000.0);
+    assert(data.temperature == 20.0);
+
+    double timeNanValue = std::numeric_limits<double>::quiet_NaN();
+    bool invalBarometerDataTimeNaN = computer.updateFromBarometer(validBarometerUpdated, timeNanValue);
+    assert(!invalBarometerDataTimeNaN);
+    assert(data.altitude == 10000.0);
+    assert(data.temperature == 20.0);
+
+    double timeInfinityValue = std::numeric_limits<double>::infinity();
+    bool invalBarometerDataTimeInfinity = computer.updateFromBarometer(validBarometerUpdated, timeInfinityValue);
+    assert(!invalBarometerDataTimeInfinity);
+    assert(data.altitude == 10000.0);
+    assert(data.temperature == 20.0);
+
+    bool invalBarometerDataTimeNeg = computer.updateFromBarometer(validBarometerUpdated, -1.0);
+    assert(!invalBarometerDataTimeNeg);
+    assert(data.altitude == 10000.0);
+    assert(data.temperature == 20.0);
+
     BarometerData invalidBarometer{10250.0, -120.0};
-    bool invalBarometerData = computer.updateFromBarometer(invalidBarometer);
+    bool invalBarometerData = computer.updateFromBarometer(invalidBarometer, 1.0);
     assert(!invalBarometerData);
 
     assert(data.altitude == 10000.0);
