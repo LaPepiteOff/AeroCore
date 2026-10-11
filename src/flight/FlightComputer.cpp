@@ -1,4 +1,5 @@
 #include "FlightComputer.hpp"
+#include <cmath>
 
 void FlightComputer::updateFromImu(const ImuData& data) {
     flightData_.pitch = data.pitch;
@@ -10,8 +11,12 @@ void FlightComputer::updateFromBarometer(const BarometerData& data) {
     flightData_.temperature = data.temperature;
 }
 
-void FlightComputer::updateFromAirspeed(const AirspeedData& data) {
+bool FlightComputer::updateFromAirspeed(const AirspeedData& data) {
+    if(!std::isfinite(data.airspeed) || data.airspeed < 0){
+        return false;
+    }
     flightData_.airspeed = data.airspeed;
+    return true;
 }
 
 const FlightData& FlightComputer::getFlightData() const {
