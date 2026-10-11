@@ -6,8 +6,8 @@
 
 class FlightComputer {
     public:
-        void updateFromImu(const ImuData& data);
-        void updateFromBarometer(const BarometerData& data);
+        bool updateFromImu(const ImuData& data);
+        bool updateFromBarometer(const BarometerData& data);
         bool updateFromAirspeed(const AirspeedData& data);
         const FlightData& getFlightData() const;
 
